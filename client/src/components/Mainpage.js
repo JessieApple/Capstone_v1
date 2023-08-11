@@ -1,0 +1,124 @@
+import React from 'react';
+import { useState, useEffect } from'react';
+import axios from 'axios';
+import Songlist from './Songlist';
+import Player from './Player';
+import UserAuth from './UserAuth'; 
+import SpotifyWebApi from 'spotify-web-api-node';
+import { ButtonGroup, Container, Form } from "react-bootstrap";
+
+const spotifyApi = new SpotifyWebApi({
+    clientId: '12e740c4bd6f472ea5c65c75fbe58a28'
+})
+
+export default function Mainpage({ code }) {
+    const accessToken = UserAuth(code)
+    const [search, setSearch] = useState("")
+    const [searchResults, setSearchResults] = useState([])
+    const [playingList, setPlayinglist] = useState()
+    const [tracks, setTracks] = useState([])
+    const [playingTrack, setPlayingTrack] = useState()
+    const [savedTracks, setSavedTracks] = useState([])
+    const [color, setColor] = useState("white")
+
+    const changeColor = color => {
+        setColor(color)
+    }
+    
+    function choosePlaylist(playlist) {
+        setPlayinglist(playlist)
+        setSearch("")
+    }
+
+    function chooseTrack(track) {
+        setPlayingTrack(track)
+        setSearch("")
+    }
+
+    function addToLibrary() {
+        spotifyApi.addToMySavedTracks([playingTrack.id])
+        .then(res => {
+            console.log(res)
+            console.log("current track added!")
+        })
+    }
+
+    function showMyLibrary() {
+        spotifyApi.getMySavedTracks({
+            limit:10
+        })
+        .then(res => {
+            console.log(res)
+            console.log("Show my saved tracks!")
+            setSavedTracks(res.body.items.map(item => {
+                return {
+                    id: item.track.id,
+                    artist: item.track.artists[0].name,
+                    image: item.track.album.images[2].url,
+                    name: item.track.name,
+                    uri: item.track.uri
+                }
+            }))
+        })
+    }
+
+    function hideMyLibrary() {
+        setSavedTracks([])
+    }
+
+    function deleteFromLibrary(track) {
+        spotifyApi.removeFromMySavedTracks([track.id])
+        .then(res => {
+            console.log(res)
+            console.log("Track removed!")
+        })
+    }
+
+    useEffect(() => {
+        if (!accessToken) return 
+        spotifyApi.setAccessToken(accessToken)
+    }, [accessToken])
+
+    useEffect(() => {
+        document.body.style.backgroundColor = color
+    },[color])
+
+    useEffect(() => {
+        if (!search) return setSearchResults([])
+        if (!accessToken) return 
+        spotifyApi.searchTracks(search).then(res => {
+            // console.log("hello")
+            // console.log(res.body)
+            setSearchResults(res.body.tracks.items.map(track => {
+                return  {
+                    artist: track.artists[0].name,
+                    title: track.name,
+                    uri: track.uri,
+                    album: track.album.images[2].url 
+                }
+            }))
+        })
+    }, [search, accessToken])
+
+    console.log(searchResults)
+
+    return (
+        <Container>
+            {/* <div>{code}</div> */}
+            <Form.Control 
+                type="search" 
+                placeholder="Search Songs/Artists" 
+                value={search} 
+                onChange={e => setSearch(e.target.value)}
+            />
+            <div>
+                {searchResults.map(track => (
+                    <Songlist track={track} chooseTrack={chooseTrack}/>
+                ))}
+            </div>
+            <div>
+                <Player accessToken={accessToken} trackUri={playingTrack?.uri}/>
+            </div>
+        </Container>
+    )
+}
