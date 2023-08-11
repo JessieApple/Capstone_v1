@@ -86,21 +86,38 @@ export default function Mainpage({ code }) {
     useEffect(() => {
         if (!search) return setSearchResults([])
         if (!accessToken) return 
-        spotifyApi.searchTracks(search).then(res => {
+        spotifyApi.searchPlaylists(search)
+        .then(res => {
             // console.log("hello")
             // console.log(res.body)
-            setSearchResults(res.body.tracks.items.map(track => {
+            setTracks([])
+            setSearchResults(res.body.playlists.items.slice(0,10).map(playlist => {
                 return  {
-                    artist: track.artists[0].name,
-                    title: track.name,
-                    uri: track.uri,
-                    album: track.album.images[2].url 
+                    id: playlist.id,
+                    name: playlist.name,
+                    image: playlist.images[0].url,
+                    uri: playlist.uri,
                 }
             }))
         })
     }, [search, accessToken])
 
-    console.log(searchResults)
+    useEffect(() => {
+        if (!playingList) return 
+        spotifyApi.getPlaylistTracks(playingList.id)
+        .then(res => {
+            console.log(res)
+            setTracks(res.body.items.slice(0,10).map(item => {
+                return {
+                    id: item.track.id,
+                    artist: item.track.artists[0].name,
+                    image: item.track.album.images[2].url,
+                    name: item.track.name,
+                    uri: item.track.uri 
+                }
+            }))
+        })
+    },[playingList, accessToken])
 
     return (
         <Container>
