@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from'react';
 import axios from 'axios';
-import Songlist from './Songlist';
+import Playlist from './Playlist'
+import Track from './Track';
 import Player from './Player';
 import UserAuth from './UserAuth'; 
 import SpotifyWebApi from 'spotify-web-api-node';
@@ -122,15 +123,25 @@ export default function Mainpage({ code }) {
     return (
         <Container>
             {/* <div>{code}</div> */}
+            <button type="button" onClick={()=>{changeColor('#a1d2df')}}>Start Music Journey</button>
+            <header>
+                <h1 style={{padding: '10px 20px', textAlign: 'center', color:'white', fontSize: '60px'}}>Welcome to your tailored music station!</h1>
+                <h1 style={{padding: '10px 20px', textAlign: 'center', color:'white', fontSize: '50px'}}>What do you feel like listening today?</h1>
+            </header>
             <Form.Control 
                 type="search" 
-                placeholder="Search Songs/Artists" 
+                placeholder="Search what you want to listen now..." 
                 value={search} 
                 onChange={e => setSearch(e.target.value)}
             />
             <div>
-                {searchResults.map(track => (
-                    <Songlist track={track} chooseTrack={chooseTrack}/>
+                {searchResults.map(playlist => (
+                    <Playlist playlist={playlist} choosePlaylist={choosePlaylist}/>
+                ))}
+            </div>
+            <div>
+                {tracks.map(track => (
+                    <Track track={track} chooseTrack={chooseTrack}/>
                 ))}
             </div>
             <div>
