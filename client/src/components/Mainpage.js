@@ -3,6 +3,7 @@ import { useState, useEffect } from'react';
 import axios from 'axios';
 import Playlist from './Playlist'
 import Track from './Track';
+import Savedtrack from './Savedtrack'
 import Player from './Player';
 import UserAuth from './UserAuth'; 
 import SpotifyWebApi from 'spotify-web-api-node';
@@ -146,6 +147,17 @@ export default function Mainpage({ code }) {
             </div>
             <div>
                 <Player accessToken={accessToken} trackUri={playingTrack?.uri}/>
+            </div>
+            <ButtonGroup style={{display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '5px 15px'}}>
+                <button onClick={addToLibrary}>Add to my Music Library</button>
+                <button onClick={showMyLibrary}>Show my Music Library</button>
+                <button onClick={hideMyLibrary}>Hide my Music Library</button>
+            </ButtonGroup>
+            <div>
+                <h3 style={{color: 'white'}}>Your Music Library</h3>
+                {savedTracks.map(track => (
+                    <Savedtrack track={track} chooseTrack={chooseTrack} deleteTrack={deleteFromLibrary} />
+                ))}
             </div>
         </Container>
     )
