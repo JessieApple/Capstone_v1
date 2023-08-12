@@ -124,7 +124,7 @@ export default function Mainpage({ code }) {
     return (
         <Container>
             {/* <div>{code}</div> */}
-            <button type="button" onClick={()=>{changeColor('#a1d2df')}}>Start Music Journey</button>
+            <button type="button" onClick={()=>{changeColor('#2daae5')}}>Start Music Journey</button>
             <header>
                 <h1 style={{padding: '10px 20px', textAlign: 'center', color:'white', fontSize: '60px'}}>Welcome to your tailored music station!</h1>
                 <h1 style={{padding: '10px 20px', textAlign: 'center', color:'white', fontSize: '50px'}}>What do you feel like listening today?</h1>
