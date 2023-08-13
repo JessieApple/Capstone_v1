@@ -7,6 +7,9 @@ require('dotenv').config()
 const app = express();
 app.use(cors())
 app.use(bodyParser.json())
+app.get('/', (req, res) => {
+    res.send("Success!")
+})
 
 app.post('/login', (req, res) => {
     const code = req.body.code;
@@ -28,4 +31,4 @@ app.post('/login', (req, res) => {
     })
 })
 
-app.listen(3001)
+app.listen(process.env.PORT || 3001)
