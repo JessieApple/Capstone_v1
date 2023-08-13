@@ -4,12 +4,15 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config()
 
+// const path = require('path')
+
 const app = express();
 app.use(cors())
 app.use(bodyParser.json())
-app.get('/', (req, res) => {
-    res.send("Success!")
-})
+// app.use(express.static(path.join(__dirname + '/public')))
+// app.get('/', (req, res) => {
+//     res.send("Success!")
+// })
 
 app.post('/login', (req, res) => {
     const code = req.body.code;
