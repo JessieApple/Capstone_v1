@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.da3089f3.css",
-    "main.js": "/static/js/main.92a6e9f6.js",
-    "index.html": "/index.html",
-    "main.da3089f3.css.map": "/static/css/main.da3089f3.css.map",
-    "main.92a6e9f6.js.map": "/static/js/main.92a6e9f6.js.map"
+    "main.css": "https://capstone-music-app-f084740b3c3f.herokuapp.com/static/css/main.da3089f3.css",
+    "main.js": "https://capstone-music-app-f084740b3c3f.herokuapp.com/static/js/main.82c46767.js",
+    "index.html": "https://capstone-music-app-f084740b3c3f.herokuapp.com/index.html",
+    "main.da3089f3.css.map": "https://capstone-music-app-f084740b3c3f.herokuapp.com/static/css/main.da3089f3.css.map",
+    "main.82c46767.js.map": "https://capstone-music-app-f084740b3c3f.herokuapp.com/static/js/main.82c46767.js.map"
   },
   "entrypoints": [
     "static/css/main.da3089f3.css",
-    "static/js/main.92a6e9f6.js"
+    "static/js/main.82c46767.js"
   ]
 }
