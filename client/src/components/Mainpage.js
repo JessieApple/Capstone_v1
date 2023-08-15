@@ -122,7 +122,7 @@ export default function Mainpage({ code }) {
     },[playingList, accessToken])
 
     return (
-        <div style={{backgroundImage: `url(${image})`, backgroundSize: 'cover', height: '150vh'}}>
+        <div style={{backgroundImage: `url(${image})`, backgroundSize: 'cover', height: '200vh'}}>
         <Container>
             {/* <div>{code}</div> */}
             <button type="button" onClick={()=>{changeColor('#2daae5')}}>Start Music Journey</button>
