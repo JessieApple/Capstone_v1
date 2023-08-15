@@ -7,6 +7,7 @@ import Player from './Player';
 import UserAuth from './UserAuth'; 
 import SpotifyWebApi from 'spotify-web-api-node';
 import { ButtonGroup, Container, Form } from "react-bootstrap";
+import image from '../image/rainyPic.jpeg';
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '12e740c4bd6f472ea5c65c75fbe58a28'
@@ -121,6 +122,7 @@ export default function Mainpage({ code }) {
     },[playingList, accessToken])
 
     return (
+        <div style={{backgroundImage: `url(${image})`, backgroundSize: 'cover', height: '150vh'}}>
         <Container>
             {/* <div>{code}</div> */}
             <button type="button" onClick={()=>{changeColor('#2daae5')}}>Start Music Journey</button>
@@ -159,5 +161,6 @@ export default function Mainpage({ code }) {
                 ))}
             </div>
         </Container>
+        </div>
     )
 }
